@@ -16,11 +16,12 @@ export async function findUserById(id: number) {
 }
 
 export async function findUserByEmail(email: string) {
-    return await prisma.user.findMany({
+    const user = await prisma.user.findMany({
         where: {
             email: email,
         },
     });
+    return user[0];
 }
 
 export default {

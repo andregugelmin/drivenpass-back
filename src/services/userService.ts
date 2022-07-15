@@ -1,10 +1,9 @@
 import { User } from '@prisma/client';
-import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import userRepository from '../repositories/userRepository.js';
-import { encryptPassword } from '../utils/encryptUtils.js';
+import { encryptPassword, verifyPassword } from '../utils/encryptUtils.js';
 
-export type CreateUserData = Omit<User, 'id'>;
+export type CreateUserData = User;
 
 async function findUserById(id: number) {
     const user = await userRepository.findUserById(id);
@@ -25,8 +24,7 @@ async function findUserByEmail(email: string) {
             message: `User not found`,
         };
     }
-    console.log(user);
-    return user[0];
+    return user;
 }
 
 async function insertUser(user: CreateUserData) {
@@ -34,6 +32,7 @@ async function insertUser(user: CreateUserData) {
     const userEncrypted: CreateUserData = {
         email: user.email,
         password: passwordEncrypted,
+        id: user.id,
     };
     await userRepository.insertUserDb(userEncrypted);
 }
@@ -41,16 +40,15 @@ async function insertUser(user: CreateUserData) {
 async function login(user: CreateUserData) {
     const userDb = await userService.findUserByEmail(user.email);
 
-    if (!bcrypt.compareSync(user.password, userDb.password)) {
-        throw {
-            status: 401,
-            message: `Wrong password`,
-        };
-    }
+    verifyPassword(user.password, userDb.password);
 
-    const token = jwt.sign({ email: user.email }, process.env.JWT_SECRET, {
-        expiresIn: 900,
-    });
+    const token = jwt.sign(
+        { email: userDb.email, id: userDb.id },
+        process.env.JWT_SECRET,
+        {
+            expiresIn: 900,
+        }
+    );
 
     return token;
 }

@@ -2,19 +2,32 @@ import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 import { findUserByEmail } from '../repositories/userRepository.js';
 
-export function verifyJWT(req: Request, res: Response, next: NextFunction) {
-    const token = req.header('x-access-token');
-    jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
-        if (err) {
-            throw {
-                status: 401,
-                message: `Invalid access token`,
-            };
-        }
+export function validateToken(req: Request, res: Response, next: NextFunction) {
+    const authorization = req.headers['authorization'];
+    const token = authorization?.replace('Bearer ', '');
 
-        console.log(decoded);
-        next();
-    });
+    const errStats = {
+        status: 401,
+        message: `invalid access token`,
+    };
+    if (!token) {
+        throw errStats;
+    }
+
+    const userDecoded = jwt.verify(
+        token,
+        process.env.JWT_SECRET,
+        (err, decoded) => {
+            if (err) {
+                throw errStats;
+            }
+            return decoded;
+        }
+    );
+
+    res.locals.user = userDecoded;
+
+    next();
 }
 
 export async function checkEmailIsRegistered(
