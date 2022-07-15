@@ -9,7 +9,7 @@ datasource db {
 
 model User {
   id           Int           @id @default(autoincrement())
-  email        String
+  email        String        @unique
   password     String
   credentials  Credential[]
   secreteNotes SecreteNote[]
@@ -28,6 +28,7 @@ model Credential {
   userId   Int
   user     User   @relation(fields: [userId], references: [id])
 
+  @@unique([userId, title])
   @@map("credentials")
 }
 
@@ -38,6 +39,7 @@ model SecreteNote {
   userId Int
   user   User   @relation(fields: [userId], references: [id])
 
+  @@unique([userId, title])
   @@map("secreteNotes")
 }
 
@@ -49,6 +51,7 @@ model Wifi {
   userId   Int
   user     User   @relation(fields: [userId], references: [id])
 
+  @@unique([userId, title])
   @@map("wifis")
 }
 
@@ -65,6 +68,7 @@ model Card {
   userId         Int
   user           User     @relation(fields: [userId], references: [id])
 
+  @@unique([userId, title])
   @@map("cards")
 }
 
