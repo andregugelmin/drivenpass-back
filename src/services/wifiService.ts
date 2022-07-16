@@ -38,11 +38,11 @@ async function deleteWifi(id: number, wifiId: number) {
     await wifiRepository.deleteWifi(wifi.id);
 }
 
-const noteService = {
+const wifiService = {
     createWifi,
     getWifis,
     getWifi,
     deleteWifi,
 };
 
-export default noteService;
+export default wifiService;

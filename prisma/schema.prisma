@@ -72,7 +72,7 @@ model Card {
 }
 
 enum CardType {
-  Credit
-  Debit
-  Both
+  credit
+  debit
+  credit_debit
 }
