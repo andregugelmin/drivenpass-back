@@ -4,11 +4,11 @@ import noteRepository from '../repositories/noteRepository.js';
 export type CreateSecreteNoteData = Omit<SecreteNote, 'id'>;
 
 async function createSecreteNote(secreteNote: CreateSecreteNoteData) {
-    const checkSecreteNote = noteRepository.findSecreteNoteTitleUnique(
+    const checkSecreteNote = await noteRepository.findSecreteNoteTitleUnique(
         secreteNote.title,
         secreteNote.userId
     );
-
+    console.log(checkSecreteNote);
     if (checkSecreteNote) {
         throw {
             status: 409,

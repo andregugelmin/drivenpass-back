@@ -34,8 +34,8 @@ model Credential {
 
 model SecreteNote {
   id     Int    @id @default(autoincrement())
-  title  String
-  note   String
+  title  String @db.VarChar(50)
+  note   String @db.VarChar(1000)
   userId Int
   user   User   @relation(fields: [userId], references: [id])
 
@@ -57,12 +57,12 @@ model Wifi {
 model Card {
   id             Int      @id @default(autoincrement())
   title          String
-  number         BigInt
+  number         String
   name           String
   securityCode   String
-  expirationDate DateTime
+  expirationDate String
   password       String
-  isVirtual      Boolean
+  isVirtual      Boolean  @default(false)
   type           CardType
   userId         Int
   user           User     @relation(fields: [userId], references: [id])

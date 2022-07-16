@@ -2,9 +2,13 @@ import { prisma } from '../config/database.js';
 import { CreateCardData } from '../services/cardService.js';
 
 export async function insert(createCardData: CreateCardData) {
-    await prisma.card.create({
-        data: createCardData,
-    });
+    try {
+        await prisma.card.create({
+            data: createCardData,
+        });
+    } catch (e) {
+        console.log(e);
+    }
 }
 
 export async function findCards(id: number) {

@@ -16,10 +16,9 @@ async function createCard(card: CreateCardData) {
             message: `Title already registered`,
         };
     }
-
+    card.isVirtual = Boolean(card.isVirtual);
     const passwordEncrypted = encrypt(card.password);
     card.password = passwordEncrypted;
-
     await cardRepository.insert(card);
 }
 

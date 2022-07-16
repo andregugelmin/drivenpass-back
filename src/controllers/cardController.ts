@@ -4,7 +4,6 @@ import cardService, { CreateCardData } from '../services/cardService.js';
 export async function createCard(req: Request, res: Response) {
     const card: CreateCardData = req.body;
     const { id } = res.locals.user;
-
     await cardService.createCard({ ...card, userId: id });
     return res.sendStatus(201);
 }
