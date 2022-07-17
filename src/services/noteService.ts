@@ -8,7 +8,6 @@ async function createSecreteNote(secreteNote: CreateSecreteNoteData) {
         secreteNote.title,
         secreteNote.userId
     );
-    console.log(checkSecreteNote);
     if (checkSecreteNote) {
         throw {
             status: 409,

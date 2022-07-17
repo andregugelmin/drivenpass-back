@@ -1,0 +1,4 @@
+DATABASE_URL= ""
+MODE = DEV
+JWT_SECRET= 'senhajwt'
+CRYPTR_KEY = 'senhacryptr'
