@@ -1,7 +1,7 @@
 # <p align = "center"> drivenpass-back </p>
 
 <p align="center">
-   <img src="https://notion-emojis.s3-us-west-2.amazonaws.com/prod/svg-twitter/1f512.svg"/>
+   <img src="https://notion-emojis.s3-us-west-2.amazonaws.com/prod/svg-twitter/1f512.svg" width="110"/>
 </p>
 
 <p align = "center">
