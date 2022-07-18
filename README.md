@@ -27,7 +27,7 @@ Para se proteger melhor nos dias de hoje é necessário o uso de senhas diferent
 - JWTs & refresh tokens
 - Node.js
 - TypeScript
-- PostgresSQL com Prisma
+- PostgreSQL com Prisma
 
 ***
 
